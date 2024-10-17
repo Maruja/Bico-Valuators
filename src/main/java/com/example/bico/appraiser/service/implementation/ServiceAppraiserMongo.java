@@ -6,10 +6,11 @@ import com.example.bico.appraiser.repository.AppraiserRepositoryMongo;
 import com.example.bico.appraiser.service.ServiceAppraiser;
 import com.example.bico.appraiser.util.BicoUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import lombok.Getter;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServiceAppraiserMongo implements ServiceAppraiser {
@@ -17,7 +18,20 @@ public class ServiceAppraiserMongo implements ServiceAppraiser {
     private AppraiserRepositoryMongo appraiserRepository;
     @Override
     public Appraiser getAppraiser(String requestedId) {
-        return null;
+        Optional<AppraiserDocument> optionalAppraiser = appraiserRepository.findById(requestedId);
+        if( optionalAppraiser.isPresent()) {
+            final AppraiserDocument appraiserDocument =optionalAppraiser.get();
+            final Appraiser appraiser = new Appraiser(appraiserDocument.getId(),
+                    appraiserDocument.getFirstName(),
+                    appraiserDocument.getLastName(),
+                    appraiserDocument.getCellphone(),
+                    appraiserDocument.getProId());
+            return appraiser;
+        }
+        else{
+            return null;
+        }
+
     }
 
     @Override
@@ -30,7 +44,6 @@ public class ServiceAppraiserMongo implements ServiceAppraiser {
         appraiserDocument.setProId(appraiser.proId());
 
         final AppraiserDocument appraiserDocument1 = appraiserRepository.save(appraiserDocument);
-
         return "/appraisers/".concat(appraiserDocument1.getId());
     }
 
@@ -41,5 +54,10 @@ public class ServiceAppraiserMongo implements ServiceAppraiser {
                 .stream()
                 .map(appraiserDocument -> new Appraiser(appraiserDocument.getId(),appraiserDocument.getFirstName(),appraiserDocument.getLastName(),appraiserDocument.getCellphone(),appraiserDocument.getProId()))
                 .toList();
+    }
+
+    @Override
+    public void deleteAppraiser(String deleteId){
+        appraiserRepository.deleteById(deleteId);
     }
 }

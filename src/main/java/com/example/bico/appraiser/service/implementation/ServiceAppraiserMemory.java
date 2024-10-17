@@ -3,12 +3,7 @@ package com.example.bico.appraiser.service.implementation;
 import com.example.bico.appraiser.model.Appraiser;
 import com.example.bico.appraiser.service.ServiceAppraiser;
 import com.example.bico.appraiser.util.BicoUtilities;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,5 +33,9 @@ public class ServiceAppraiserMemory implements ServiceAppraiser {
 
     public List<Appraiser> getAll() {
         return appraiserList;
+    }
+
+    public void deleteAppraiser(String deleteId){
+
     }
 }

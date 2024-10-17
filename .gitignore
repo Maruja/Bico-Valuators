@@ -1,37 +1,57 @@
-HELP.md
-.gradle
+# Archivos de compilación de Gradle
+.gradle/
 build/
+
+# Archivos de Gradle Wrapper
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+!gradlew
+!gradlew.bat
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
-
-### IntelliJ IDEA ###
-.idea
-*.iws
+# Archivos de configuración de IntelliJ IDEA / Android Studio
+.idea/
 *.iml
 *.ipr
+*.iws
 out/
-!**/src/main/**/out/
-!**/src/test/**/out/
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+# Archivos de configuración de Eclipse
+.project
+.classpath
+.csettings/
+.settings/
+bin/
+tmp/
 
-### VS Code ###
-.vscode/
+# Archivos de configuración de NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Archivos de sistema (Mac, Windows)
+.DS_Store
+Thumbs.db
+
+# Archivos de logs
+*.log
+
+# Archivos de configuración de Maven
+target/
+
+# Archivos de caches de compilación
+*.class
+*.jar
+*.war
+*.ear
+
+# Archivos de cobertura de pruebas
+*.lcov
+*.coverage
+
+# Otros archivos innecesarios
+*.bak
+*.swp
+*.swo
+*.old
