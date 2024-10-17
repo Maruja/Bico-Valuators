@@ -17,4 +17,5 @@ public class AppraiserDocument {
     private String lastName;
     private String cellphone;
     private String proId;
+    private Boolean deleted = false;
 }

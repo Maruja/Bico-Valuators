@@ -35,7 +35,7 @@ public class ServiceAppraiserMemory implements ServiceAppraiser {
         return appraiserList;
     }
 
-    public void deleteAppraiser(String deleteId){
+    public void deleteAppraiserSoft(String deleteId){
 
     }
 }

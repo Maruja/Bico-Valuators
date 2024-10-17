@@ -42,9 +42,15 @@ class AppraiserController {
         return ResponseEntity.ok(serviceAppraiser.getAll());
     }
 
-    @DeleteMapping("/{deleteId}")
-    private ResponseEntity<Void> deleteAppraiser(@PathVariable String deleteId){
-        serviceAppraiser.deleteAppraiser(deleteId);
+//    @DeleteMapping("/{deleteId}/hard")
+//    private ResponseEntity<Void> deleteAppraiserHard(@PathVariable String deleteId){
+//        serviceAppraiser.deleteAppraiser(deleteId);
+//        return ResponseEntity.noContent().build();
+//    }
+
+    @DeleteMapping("/{deleteId}/soft")
+    private ResponseEntity<Void> deleteAppraiserSoft(@PathVariable String deleteId){
+        serviceAppraiser.deleteAppraiserSoft(deleteId);
         return ResponseEntity.noContent().build();
     }
 }

@@ -9,6 +9,6 @@ public interface ServiceAppraiser {
     String addAppraiser(Appraiser newAppraiser);
     List<Appraiser> getAll();
 
-    void deleteAppraiser(String deleteId);
+    void deleteAppraiserSoft(String deleteId);
 
 }
