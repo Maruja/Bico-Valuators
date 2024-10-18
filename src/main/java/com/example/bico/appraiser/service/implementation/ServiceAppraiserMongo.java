@@ -71,11 +71,15 @@ public class ServiceAppraiserMongo implements ServiceAppraiser {
 //                .toList();
 //    }
 
-    @Override
+
     public void deleteAppraiserSoft(String deleteId) {
         Optional<AppraiserDocument> optionalAppraiserDocument = appraiserRepository.findById(deleteId);
         final AppraiserDocument appraiserDocument = optionalAppraiserDocument.get();
         appraiserDocument.setDeleted(true);
         appraiserRepository.save(appraiserDocument);
+    }
+
+    public void deleteAppraiserHard(String deleteId) {
+        appraiserRepository.deleteById(deleteId);
     }
 }

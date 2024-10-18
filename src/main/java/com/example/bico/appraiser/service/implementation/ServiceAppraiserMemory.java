@@ -36,6 +36,8 @@ public class ServiceAppraiserMemory implements ServiceAppraiser {
     }
 
     public void deleteAppraiserSoft(String deleteId){
+    }
 
+    public void deleteAppraiserHard(String deleteId){
     }
 }
