@@ -26,8 +26,14 @@ class AppraiserController {
     @Autowired
     private ServiceAppraiser serviceAppraiser;
     @GetMapping("/{requestedId}")
-    private Appraiser findById(@PathVariable String requestedId) {
-        return serviceAppraiser.getAppraiser(requestedId);
+    private ResponseEntity<Appraiser> findById(@PathVariable String requestedId) {
+         if (serviceAppraiser.getAppraiser(requestedId) != null){
+             return ResponseEntity.ok(serviceAppraiser.getAppraiser(requestedId));
+         }
+         else{
+             return ResponseEntity.notFound().build();
+         }
+
 
     }
 

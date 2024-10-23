@@ -30,7 +30,7 @@ public class ServiceAppraiserMongo implements ServiceAppraiser {
                     appraiserDocument.getCellphone(),
                     appraiserDocument.getProId());
             return appraiser;
-        } else {
+        } else { // user is not found
             return null;
         }
 
@@ -62,14 +62,7 @@ public class ServiceAppraiserMongo implements ServiceAppraiser {
     }
 
 
-//    @Override
-//    public List<Appraiser> getAll() {
-//        return appraiserRepository
-//                .findAll()
-//                .stream()
-//                .map(appraiserDocument -> new Appraiser(appraiserDocument.getId(),appraiserDocument.getFirstName(),appraiserDocument.getLastName(),appraiserDocument.getCellphone(),appraiserDocument.getProId()))
-//                .toList();
-//    }
+
 
     @Override
     public void deleteAppraiserSoft(String deleteId) {
@@ -77,5 +70,25 @@ public class ServiceAppraiserMongo implements ServiceAppraiser {
         final AppraiserDocument appraiserDocument = optionalAppraiserDocument.get();
         appraiserDocument.setDeleted(true);
         appraiserRepository.save(appraiserDocument);
+    }
+
+    @Override
+    public Boolean isExpert(String searchId){
+       Optional<AppraiserDocument> optionalAppraiserDocument = appraiserRepository.findById(searchId);
+        if( optionalAppraiserDocument.isPresent()){
+            final AppraiserDocument appraiserDocument = optionalAppraiserDocument.get();
+            if(  appraiserDocument.getProId() == null || appraiserDocument.getProId().isEmpty() ){
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        else {
+            return null;
+        }
+
+
+
     }
 }
