@@ -40,6 +40,11 @@ public class ServiceAppraiserMemory implements ServiceAppraiser {
     }
 
     @Override
+    public void deleteAppraiserHard(String deleteId) {
+
+    }
+
+    @Override
     public Boolean isExpert(String searchId) {
         return null;
     }

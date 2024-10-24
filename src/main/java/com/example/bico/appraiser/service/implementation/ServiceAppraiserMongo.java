@@ -31,7 +31,7 @@ public class ServiceAppraiserMongo implements ServiceAppraiser {
                     appraiserDocument.getProId());
             return appraiser;
         } else { // user is not found
-            return null;
+            throw new RuntimeException("User not found!");
         }
 
     }
@@ -51,7 +51,7 @@ public class ServiceAppraiserMongo implements ServiceAppraiser {
 
     @Override
     public List<Appraiser> getAll() {
-//        return appraiserRepository.findAllNotDeleted(); // Fetch only active (not deleted) records
+//        return appraiserRepository.findAllNotDeleted(); // Fetch only active (non deleted) records
         List<AppraiserDocument> listAppraisersDocument = appraiserRepository.findByDeleted(false);
         List<Appraiser> listAppraisers = new ArrayList<>();
         for ( AppraiserDocument ad: listAppraisersDocument){
@@ -67,9 +67,28 @@ public class ServiceAppraiserMongo implements ServiceAppraiser {
     @Override
     public void deleteAppraiserSoft(String deleteId) {
         Optional<AppraiserDocument> optionalAppraiserDocument = appraiserRepository.findById(deleteId);
-        final AppraiserDocument appraiserDocument = optionalAppraiserDocument.get();
-        appraiserDocument.setDeleted(true);
-        appraiserRepository.save(appraiserDocument);
+        if(optionalAppraiserDocument.isPresent()){
+            final AppraiserDocument appraiserDocument = optionalAppraiserDocument.get();
+            appraiserDocument.setDeleted(true);
+            appraiserRepository.save(appraiserDocument);
+        }
+        else{
+            throw new RuntimeException("User not found!");
+        }
+
+    }
+
+    @Override
+    public void deleteAppraiserHard(String deleteId) {
+        Optional<AppraiserDocument> optionalAppraiserDocument = appraiserRepository.findById(deleteId);
+        if(optionalAppraiserDocument.isPresent()){
+            appraiserRepository.deleteById(deleteId);
+
+        }
+        else{
+            throw new RuntimeException("User not found!");
+        }
+
     }
 
     @Override

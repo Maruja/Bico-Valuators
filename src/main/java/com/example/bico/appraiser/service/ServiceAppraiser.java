@@ -11,6 +11,8 @@ public interface ServiceAppraiser {
 
     void deleteAppraiserSoft(String deleteId);
 
+    void deleteAppraiserHard(String deleteId);
+
     Boolean isExpert(String searchId);
 
 }
