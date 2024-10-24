@@ -27,13 +27,7 @@ class AppraiserController {
     private ServiceAppraiser serviceAppraiser;
     @GetMapping("/{requestedId}")
     private ResponseEntity<Appraiser> findById(@PathVariable String requestedId) {
-         if (serviceAppraiser.getAppraiser(requestedId) != null){
-             return ResponseEntity.ok(serviceAppraiser.getAppraiser(requestedId));
-         }
-         else{
-             return ResponseEntity.notFound().build();
-         }
-
+        return ResponseEntity.ok(serviceAppraiser.getAppraiser(requestedId));
 
     }
 
@@ -48,11 +42,11 @@ class AppraiserController {
         return ResponseEntity.ok(serviceAppraiser.getAll());
     }
 
-//    @DeleteMapping("/{deleteId}/hard")
-//    private ResponseEntity<Void> deleteAppraiserHard(@PathVariable String deleteId){
-//        serviceAppraiser.deleteAppraiser(deleteId);
-//        return ResponseEntity.noContent().build();
-//    }
+    @DeleteMapping("/{deleteId}/hard")
+    private ResponseEntity<Void> deleteAppraiserHard(@PathVariable String deleteId){
+        serviceAppraiser.deleteAppraiserHard(deleteId);
+        return ResponseEntity.noContent().build();
+    }
 
     @DeleteMapping("/{deleteId}/soft")
     private ResponseEntity<Void> deleteAppraiserSoft(@PathVariable String deleteId){
