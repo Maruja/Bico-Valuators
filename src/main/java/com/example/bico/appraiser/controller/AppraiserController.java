@@ -53,4 +53,10 @@ class AppraiserController {
         serviceAppraiser.deleteAppraiserSoft(deleteId);
         return ResponseEntity.noContent().build();
     }
+
+    //Make a endpoint for isExpert
+    @GetMapping("/{findId}/isExpert")
+    private ResponseEntity<Boolean> isExpert(@PathVariable String findId){
+        return ResponseEntity.ok(serviceAppraiser.isExpert(findId));
+    }
 }
