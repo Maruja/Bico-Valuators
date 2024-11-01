@@ -1,6 +1,7 @@
 package com.example.bico.appraiser.service.implementation;
 
 import com.example.bico.appraiser.model.Appraiser;
+import com.example.bico.appraiser.model.mongo.AppraiserDocument;
 import com.example.bico.appraiser.service.ServiceAppraiser;
 import com.example.bico.appraiser.util.BicoUtilities;
 
@@ -12,6 +13,11 @@ public class ServiceAppraiserMemory implements ServiceAppraiser {
 
     public ServiceAppraiserMemory() {
         appraiserList =  new ArrayList<>();
+    }
+
+    @Override
+    public AppraiserDocument appraiserIsThere(String findId) {
+        return null;
     }
 
     public Appraiser getAppraiser(String requestedId) {

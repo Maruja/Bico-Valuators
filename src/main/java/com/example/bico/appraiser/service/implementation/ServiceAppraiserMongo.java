@@ -20,20 +20,24 @@ public class ServiceAppraiserMongo implements ServiceAppraiser {
     private AppraiserRepositoryMongo appraiserRepository;
 
     @Override
-    public Appraiser getAppraiser(String requestedId) {
-        Optional<AppraiserDocument> optionalAppraiser = appraiserRepository.findById(requestedId);
+    public AppraiserDocument appraiserIsThere(String findId) {
+        Optional<AppraiserDocument> optionalAppraiser = appraiserRepository.findById(findId);
         if (optionalAppraiser.isPresent()) {
-            final AppraiserDocument appraiserDocument = optionalAppraiser.get();
-            final Appraiser appraiser = new Appraiser(appraiserDocument.getId(),
-                    appraiserDocument.getFirstName(),
-                    appraiserDocument.getLastName(),
-                    appraiserDocument.getCellphone(),
-                    appraiserDocument.getProId());
-            return appraiser;
-        } else { // user is not found
-            throw new RuntimeException("User not found!");
+            return optionalAppraiser.get();
+        } else { // User not found
+            throw new RuntimeException("User Not Found ! ");
         }
+    }
 
+    @Override
+    public Appraiser getAppraiser(String requestedId) {
+        final AppraiserDocument appraiserDocument = appraiserIsThere(requestedId);
+        final Appraiser appraiser = new Appraiser(appraiserDocument.getId(),
+                appraiserDocument.getFirstName(),
+                appraiserDocument.getLastName(),
+                appraiserDocument.getCellphone(),
+                appraiserDocument.getProId());
+        return appraiser;
     }
 
     @Override
@@ -54,60 +58,33 @@ public class ServiceAppraiserMongo implements ServiceAppraiser {
 //        return appraiserRepository.findAllNotDeleted(); // Fetch only active (non deleted) records
         List<AppraiserDocument> listAppraisersDocument = appraiserRepository.findByDeleted(false);
         List<Appraiser> listAppraisers = new ArrayList<>();
-        for ( AppraiserDocument ad: listAppraisersDocument){
-            Appraiser appraiser = new Appraiser(ad.getId(),ad.getFirstName(),ad.getLastName(),ad.getCellphone(),ad.getProId());
+        for (AppraiserDocument ad : listAppraisersDocument) {
+            Appraiser appraiser = new Appraiser(ad.getId(), ad.getFirstName(), ad.getLastName(), ad.getCellphone(), ad.getProId());
             listAppraisers.add(appraiser);
         }
         return listAppraisers;
     }
 
-
-
-
     @Override
     public void deleteAppraiserSoft(String deleteId) {
-        Optional<AppraiserDocument> optionalAppraiserDocument = appraiserRepository.findById(deleteId);
-        if(optionalAppraiserDocument.isPresent()){
-            final AppraiserDocument appraiserDocument = optionalAppraiserDocument.get();
-            appraiserDocument.setDeleted(true);
-            appraiserRepository.save(appraiserDocument);
-        }
-        else{
-            throw new RuntimeException("User not found!");
-        }
-
+        final AppraiserDocument appraiserDocument = appraiserIsThere(deleteId);
+        appraiserDocument.setDeleted(true);
+        appraiserRepository.save(appraiserDocument);
     }
 
     @Override
     public void deleteAppraiserHard(String deleteId) {
-        Optional<AppraiserDocument> optionalAppraiserDocument = appraiserRepository.findById(deleteId);
-        if(optionalAppraiserDocument.isPresent()){
-            appraiserRepository.deleteById(deleteId);
-
-        }
-        else{
-            throw new RuntimeException("User not found!");
-        }
-
+        appraiserIsThere(deleteId);
+        appraiserRepository.deleteById(deleteId);
     }
 
     @Override
-    public Boolean isExpert(String searchId){
-       Optional<AppraiserDocument> optionalAppraiserDocument = appraiserRepository.findById(searchId);
-        if( optionalAppraiserDocument.isPresent()){
-            final AppraiserDocument appraiserDocument = optionalAppraiserDocument.get();
-            if(  appraiserDocument.getProId() == null || appraiserDocument.getProId().isEmpty() ){
-                return false;
-            }
-            else {
-                return true;
-            }
+    public Boolean isExpert(String searchId) {
+        final AppraiserDocument appraiserDocument = appraiserIsThere(searchId);
+        if (appraiserDocument.getProId() == null || appraiserDocument.getProId().isEmpty()) {
+            return false;
+        } else {
+            return true;
         }
-        else {
-            return null;
-        }
-
-
-
     }
 }
